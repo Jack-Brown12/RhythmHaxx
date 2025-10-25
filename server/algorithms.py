@@ -59,6 +59,7 @@ def get_map_path_coordinates(initial_point, scaling_factor, points, use_MAPBOX =
     # Return coordinates
     return { "path_coordinates": [1,1] }
 
+# Fetch snapped points from Mapbox API
 def fetch_snapped_points(points):
     query = "https://api.mapbox.com/matching/v5/mapbox/walking/" + ";".join([f"{lon},{lat}" for lon, lat in points]) + "?geometries=geojson&access_token=" + API_KEY
     print(query)

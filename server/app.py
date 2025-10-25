@@ -1,7 +1,11 @@
 from flask import Flask, render_template, jsonify, request
-from algorithms import get_map_path_coordinates
+from dotenv import load_dotenv
+from functions import get_map_path_coordinates
 
+# Load environment variables from .env file
+load_dotenv()
 
+# Initialize Flask app
 app = Flask(__name__)
 
 

@@ -1,4 +1,8 @@
+import os
+
 import requests
+
+API_KEY = os.getenv("MAPBOX_API_KEY")
 
 def get_map_path_coordinates(initial_point, scaling_factor, points):
     print("Initial Point:", initial_point)
@@ -8,18 +12,14 @@ def get_map_path_coordinates(initial_point, scaling_factor, points):
     # Scale, translate and find bounds
 
     # Snap points to grid using API that strava uses
+    snapped_points = fetch_snapped_points(points)
 
-
-    return { "path_coordinates": [[1,1]] }
-
-
-def snap_to_map(points):
-    pass
+    return { "path_coordinates": snapped_points }
 
 
 def fetch_snapped_points(points):
-    query = "https://router.project-osrm.org/match/v1/driving/" + ";".join([f"{lon},{lat}" for lat, lon in points]) + "?geometries=geojson&overview=full"
-    
+    query = "https://api.mapbox.com/matching/v5/mapbox/walking/" + ";".join([f"{lon},{lat}" for lon, lat in points]) + "?geometries=geojson&access_token=" + API_KEY
+    print(query)
     response = requests.get(query)
     
     if response.status_code == 200:

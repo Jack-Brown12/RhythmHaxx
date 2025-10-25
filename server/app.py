@@ -13,14 +13,13 @@ def index():
         # Store info
         starting_point = form["starting_point"]
         scale = form["scaling_factor"]
-        nodes = form["nodes"]
+        points = form["points"]
 
-        coordinates = get_map_path_coordinates(starting_point, scale, nodes)
+        coordinates = get_map_path_coordinates(starting_point, scale, points)
 
         return jsonify(coordinates)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
    

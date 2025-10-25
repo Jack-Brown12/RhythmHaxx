@@ -1,4 +1,10 @@
 import overpy
+import os
+
+import requests
+
+API_KEY = os.getenv("MAPBOX_API_KEY")
+
 
 query = """
 [out:json][timeout:25];
@@ -12,7 +18,7 @@ out skel qt;
 BOUNDARY_PADDING = 2
 
 
-def get_map_path_coordinates(initial_point, scaling_factor, points):
+def get_map_path_coordinates(initial_point, scaling_factor, points, use_MAPBOX = False):
     api = overpy.Overpass()
     result = api.query(query)
     print(result.ways)
@@ -42,11 +48,30 @@ def get_map_path_coordinates(initial_point, scaling_factor, points):
     bounds[2] -= BOUNDARY_PADDING
     bounds[3] += BOUNDARY_PADDING
 
+    
+    # Snap points to grid using API that strava uses
+    if use_MAPBOX:
+      snapped_points = fetch_snapped_points(points)
+      return { "path_coordinates": snapped_points }
+    
     # Run DFS to find a best-matching path
 
     # Return coordinates
-    
     return { "path_coordinates": [1,1] }
+
+def fetch_snapped_points(points):
+    query = "https://api.mapbox.com/matching/v5/mapbox/walking/" + ";".join([f"{lon},{lat}" for lon, lat in points]) + "?geometries=geojson&access_token=" + API_KEY
+    print(query)
+    response = requests.get(query)
+    
+    if response.status_code == 200:
+        data = response.json()
+        if 'matchings' in data and len(data['matchings']) > 0:
+            return data['matchings'][0]['geometry']['coordinates']
+
+
+    print("No matchings found in the response.")
+    return []
 
 
 def pulldata(bounds):

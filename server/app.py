@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from dotenv import load_dotenv
-from functions import get_map_path_coordinates
+from algorithms import get_map_path_coordinates
 
 # Load environment variables from .env file
 load_dotenv()
@@ -19,7 +19,7 @@ def index():
         scale = form["scaling_factor"]
         points = form["points"]
 
-        coordinates = get_map_path_coordinates(starting_point, scale, points)
+        coordinates = get_map_path_coordinates(starting_point, scale, points, True)
 
         return jsonify(coordinates)
 

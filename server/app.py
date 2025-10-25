@@ -1,6 +1,7 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 from algorithms import get_map_path_coordinates
+from flask_cors import CORS, cross_origin
 
 # Load environment variables from .env file
 load_dotenv()
@@ -13,6 +14,9 @@ app = Flask(__name__)
 def index():
         # Get the JSON data from the request
         form = request.get_json()
+
+        # Enable CORS
+        CORS(app, resources={r"/*": {"origins": "*"}})
 
         # Store info
         starting_point = form["starting_point"]

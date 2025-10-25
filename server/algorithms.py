@@ -89,5 +89,6 @@ def FindClosestNode(Point,Data:overpy.Result):
               closestPoint = [x,y]
     print(closestDistance)
     return closestPoint
-      
-get_map_path_coordinates([4,4],3,[[0,0],[0,2],[2,2],[2,0]])
+
+if __name__ == '__main__':
+    get_map_path_coordinates([4,4],3,[[0,0],[0,2],[2,2],[2,0]])

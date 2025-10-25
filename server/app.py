@@ -1,15 +1,23 @@
 from flask import Flask, render_template, jsonify, request
+from algorithms import get_map_path_coordinates
+
 
 app = Flask(__name__)
 
+
 @app.route('/api/', methods=['POST'])
 def index():
+        # Get the JSON data from the request
         form = request.get_json()
-        form_key = form["sigma"]
-        print(form_key)
-        blah = {"key": "value"}
-        return jsonify(blah)
-#blah["key"]
+
+        # Store info
+        starting_point = form["starting_point"]
+        scale = form["scaling_factor"]
+        nodes = form["nodes"]
+
+        coordinates = get_map_path_coordinates(starting_point, scale, nodes)
+
+        return jsonify(coordinates)
 
 
 if __name__ == '__main__':

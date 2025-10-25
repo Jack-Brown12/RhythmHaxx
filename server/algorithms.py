@@ -51,14 +51,14 @@ def get_map_path_coordinates(initial_point, scaling_factor, points, use_MAPBOX =
 # Fetch snapped points from Mapbox API
 def fetch_snapped_points(points):
     query = "https://api.mapbox.com/matching/v5/mapbox/walking/" + ";".join([f"{lon},{lat}" for lon, lat in points]) + "?geometries=geojson&access_token=" + API_KEY
-    print(query)
     response = requests.get(query)
     
     if response.status_code == 200:
         data = response.json()
         if 'matchings' in data and len(data['matchings']) > 0:
             return data['matchings'][0]['geometry']['coordinates']
-
+        return None
+    return None
 
 
 def pulldata(bounds):
@@ -91,7 +91,3 @@ def FindClosestNode(Point,Data:overpy.Result):
     return closestPoint
       
 get_map_path_coordinates([4,4],3,[[0,0],[0,2],[2,2],[2,0]])
-
-     
-    
-    

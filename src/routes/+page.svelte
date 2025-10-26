@@ -30,7 +30,7 @@
 				latLngArray.push([latLng.lat(), latLng.lng()]);
 			});
 
-			fetch(`${PUBLIC_API_BASE_ADDRESS}/api/mapify`, {
+			fetch(`/api/mapify`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

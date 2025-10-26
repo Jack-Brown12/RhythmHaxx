@@ -1,0 +1,30 @@
+# Dependencies
+/node_modules
+
+# IDE settings
+/.idea/
+
+# SvelteKit build artifacts
+/.svelte-kit/
+/build/
+
+# Deployment outputs
+.output
+.vercel
+.netlify
+.wrangler
+
+# Environment variables
+# Ignore all .env files...
+.env*
+# ...except for the example templates
+!.env.example
+!.env.test
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Vite temporary files
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

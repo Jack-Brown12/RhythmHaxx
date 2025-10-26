@@ -1,5 +1,4 @@
 import os
-
 import osmnx
 import pyproj
 import requests
@@ -10,7 +9,6 @@ API_KEY = os.getenv("MAPBOX_API_KEY")
 BOUNDARY_PADDING = 0.002
 SHAPE_PENALTY_MULTIPLIER = 4
 LENGTH_WEIGHT = 0.1
-
 
 # Main function to get map path coordinates
 def get_map_path_coordinates(points):

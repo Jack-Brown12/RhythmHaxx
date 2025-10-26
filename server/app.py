@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 from algorithms import get_map_path_coordinates
 
@@ -14,17 +14,17 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-@app.route('/api/mapify/', methods=['POST'])
+@app.route('/api/mapify', methods=['POST'])
+@cross_origin()
 def index():
     # Get the JSON data from the request
     form = request.get_json()
 
-    # Store info
-    points = form["points"]
+    # Process the points and get the response
+    response = get_map_path_coordinates(form["points"])
 
-    coordinates = get_map_path_coordinates(points)
-
-    return jsonify(coordinates)
+    # Return the response as JSON
+    return jsonify(response)
 
 
 if __name__ == '__main__':

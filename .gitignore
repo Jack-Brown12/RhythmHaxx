@@ -6,7 +6,6 @@
 
 # SvelteKit build artifacts
 /.svelte-kit/
-/build/
 
 # Deployment outputs
 .output

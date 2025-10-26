@@ -5,7 +5,7 @@ import os
 
 load_dotenv()
 
-app = Flask(__name__, static_folder='public', static_url_path='')
+app = Flask(__name__, static_folder='build', static_url_path='')
 
 @app.route('/api/mapify', methods=['POST'])
 def mapify_route():

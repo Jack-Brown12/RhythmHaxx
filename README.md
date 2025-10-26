@@ -1,7 +1,7 @@
 # RhythmHaxx
 RhythmHacks Hackathon Project
 # Draw2Route
-![Paris]Image 2025-10-25 at 22.55.jpg
+![Paris](./Image 2025-10-25 at 22.55.jpg)
 
 ## Overview
 **Draw2Route** converts a user-drawn line (a list of GPS points) into a realistic walking route that aligns with real-world roads.  

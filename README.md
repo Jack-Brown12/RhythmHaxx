@@ -9,7 +9,7 @@ It uses **OpenStreetMap** data through the **OSMnx** library to find the most ac
 
 ## How It Works
 1. **Input:**  
-   Takes a list of GPS coordinates (`points`) and a flag to optionally use the OpenStreetMap API.
+   Takes a list of GPS coordinates (points) and a flag to optionally use the OpenStreetMap API.
 2. **Bounding Box:**  
    Builds a small bounding box around the drawing, padded with extra space to define the area of interest.
 3. **Graph Construction:**  
@@ -24,3 +24,5 @@ It uses **OpenStreetMap** data through the **OSMnx** library to find the most ac
    Runs a shortest-path algorithm to find the optimal walking route that best fits the drawing.
 8. **Output:**  
    Returns the route as a list of GPS coordinates in WGS84 format.
+
+   'Created by Andrii Bessarab, Adam Turaj, Jason Liang, and Jack Brown'

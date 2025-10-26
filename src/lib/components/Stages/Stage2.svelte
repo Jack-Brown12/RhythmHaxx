@@ -21,6 +21,7 @@
 
 	let addressSelected = $state(false);
 	let length = $state(0);
+	let buttonText = $state('Mapify!');
 
 	const { points, nextStage } = $props();
 
@@ -67,17 +68,19 @@
 			const startPos = path[0];
 			const endPos = path[path.length - 1];
 
-			new AdvancedMarkerElement({
-				position: startPos,
-				map,
-				content: Object.assign(document.createElement('div'), {
-					style: `
+			const style = `
       					width: 12px;
       					height: 12px;
       					background-color: green;
       					border-radius: 50%;
       					border: 2px solid white;
-    				`
+    				`;
+
+			new AdvancedMarkerElement({
+				position: startPos,
+				map,
+				content: Object.assign(document.createElement('div'), {
+					style: style
 				})
 			});
 
@@ -89,13 +92,7 @@
 				position: endPos,
 				map,
 				content: Object.assign(document.createElement('div'), {
-					style: `
-						width: 12px;
-						height: 12px;
-						background-color: red;
-						border-radius: 50%;
-						border: 2px solid white;
-					`
+					style: style
 				})
 			});
 
@@ -136,9 +133,12 @@
 
 <div class="flex flex-row">
 	<Sidebar
-		onButtonClick={() => nextStage(polyline)}
+		onButtonClick={() => {
+			buttonText = 'Mapping...';
+			nextStage(polyline);
+		}}
 		description="Time to place your masterpiece on the globe! Start by entering the address you want to start from. Afterwards, use the two sliders to adjust the size and rotation of your drawing."
-		buttonText="Mapify!"
+		{buttonText}
 		buttonEnabled={addressSelected}
 	/>
 	<div class="relative h-screen w-full">
@@ -170,8 +170,8 @@
 					<input
 						id="rotation-slider"
 						type="range"
-						min="0"
-						max="360"
+						min="-180"
+						max="180"
 						step="1"
 						value="0"
 						class="h-2 w-64 cursor-pointer appearance-none rounded-lg bg-gray-200 accent-black"
@@ -190,8 +190,8 @@
 					<input
 						id="scale-slider"
 						type="range"
-						min="2"
-						max="100"
+						min="1"
+						max="40"
 						step="0.5"
 						value="20"
 						class="h-2 w-64 cursor-pointer appearance-none rounded-lg bg-gray-200 accent-black"

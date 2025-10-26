@@ -46,17 +46,19 @@
 		const startPos = path[0];
 		const endPos = path[path.length - 1];
 
+		const style = `
+						width: 12px;
+						height: 12px;
+						background-color: red;
+						border-radius: 50%;
+						border: 2px solid white;
+					`;
+
 		new AdvancedMarkerElement({
 			position: startPos,
 			map,
 			content: Object.assign(document.createElement('div'), {
-				style: `
-      					width: 12px;
-      					height: 12px;
-      					background-color: green;
-      					border-radius: 50%;
-      					border: 2px solid white;
-    				`
+				style: style
 			})
 		});
 
@@ -68,13 +70,7 @@
 			position: endPos,
 			map,
 			content: Object.assign(document.createElement('div'), {
-				style: `
-						width: 12px;
-						height: 12px;
-						background-color: red;
-						border-radius: 50%;
-						border: 2px solid white;
-					`
+				style: style
 			})
 		});
 
@@ -106,7 +102,7 @@
 		<div
 			class="absolute top-3 right-3 rounded-xl border border-gray-300 bg-white/80 px-4 py-2 text-sm font-semibold text-gray-800 shadow-lg backdrop-blur-md"
 		>
-			Estimated Distance: {length.toFixed(2)} km
+			Distance: {length.toFixed(2)} km
 		</div>
 	</div>
 </div>

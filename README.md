@@ -25,4 +25,4 @@ It uses **OpenStreetMap** data through the **OSMnx** library to find the most ac
 8. **Output:**  
    Returns the route as a list of GPS coordinates in WGS84 format.
 
-   'Created by Andrii Bessarab, Adam Turaj, Jason Liang, and Jack Brown'
+   `Created by Andrii Bessarab, Adam Turaj, Jason Liang, and Jack Brown`

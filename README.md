@@ -1,4 +1,3 @@
-# RhythmHaxx
 RhythmHacks Hackathon Project
 # Draw2Route
 ![Paris](./Image_2025-10-25_at_22.55.jpg)

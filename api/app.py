@@ -9,7 +9,7 @@ app = Flask(__name__, static_folder='build', static_url_path='')
 
 @app.route('/api/config', methods=['GET'])
 def get_config():
-    maps_api_key = os.environ.get('MAPS_API_KEY')
+    maps_api_key = os.environ.get('PUBLIC_MAPS_API_KEY')
 
     if not maps_api_key:
         return jsonify({"error": "Maps API key not configured on server."}), 500

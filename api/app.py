@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, send_from_directory
-from algorithms import get_map_path_coordinates
+from algorithms import get_map_path_coordinates,JasonAlgorithm
 from dotenv import load_dotenv
 import os
 
@@ -22,7 +22,7 @@ def get_config():
 @app.route('/api/mapify', methods=['POST'])
 def mapify_route():
     form = request.get_json()
-    response = get_map_path_coordinates(form["points"])
+    response = JasonAlgorithm(form["points"])
     return jsonify(response)
 
 

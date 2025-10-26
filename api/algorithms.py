@@ -151,16 +151,27 @@ def JasonAlgorithm(points):
     print(f"Bounds: {bounds}")
     MapData = pulldata(bounds)
     test = EvaluateGraph([[float(node.lat),float(node.lon)] for way in MapData.ways for node in way.nodes],points)
-    print(test)
     Graph = GetGraph(MapData)
-    StartToGraphNode = FindClosestNode(points[0],test)
+    #StartToGraphNode = FindClosestNode(points[0],test)
     ActualSolution = []
+
     for i in range(len(test)-1):
         ActualSolution.append(Search(Graph,tuple(test[i]),tuple(test[i+1])))
-    
-    plot_graph(Graph,points,test,[points[0],StartToGraphNode],ActualSolution)
- 
-    return { "points": ActualSolution}
+    t = []
+
+    for i in ActualSolution:
+        try:
+            for j in i:
+                try:
+                    t.append(j)
+                except Exception:
+                    pass
+            
+        except Exception:
+            pass
+    t = list(dict.fromkeys(t))
+    print(f"Actual Solution: {t}")
+    return { "points": t}
 
 
 
@@ -170,6 +181,7 @@ def scale_point_translate(point, initial_point,bounds):
             bounds[1] = max(bounds[1],point[i][0]+0.01)
             bounds[2] = min(bounds[2],point[i][1]-0.01)
             bounds[3] = max(bounds[3],point[i][1]+0.01)
+    
     return point,bounds
     
 
@@ -292,9 +304,11 @@ if __name__ == "__main__":
     [43.464415, -80.558697],  # bottom-right
     [43.464415, -80.561157],  # bottom-left
     [43.466215, -80.561157]]
+    
             
         
     )
+    plot_graph({},)
 
 
      

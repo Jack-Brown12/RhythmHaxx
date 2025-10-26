@@ -1,4 +1,5 @@
 import overpy
+import os
 import math
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,8 +28,33 @@ def get_map_path_coordinates(initial_point, scaling_factor, points):
     
 
     # Scale, translate and find bounds
-    points = scale_point(points,scaling_factor)
-    points,bounds = translate_point(points,initial_point,bounds)
+    for i in range(len(points)):
+        # Scale
+        points[i][0] *= scaling_factor
+        points[i][1] *= scaling_factor
+
+        # Translate
+        points[i][0] += initial_point[0]
+        points[i][1] += initial_point[1]
+
+        # Update bounds
+        bounds[0] = min(bounds[0], points[i][0])
+        bounds[1] = max(bounds[1], points[i][0])
+        bounds[2] = min(bounds[2], points[i][1])
+        bounds[3] = max(bounds[3], points[i][1])
+
+    # Add padding to bounds
+    bounds[0] -= BOUNDARY_PADDING
+    bounds[1] += BOUNDARY_PADDING
+    bounds[2] -= BOUNDARY_PADDING
+    bounds[3] += BOUNDARY_PADDING
+
+    
+    # Snap points to grid using API that strava uses
+    if use_MAPBOX:
+      snapped_points = fetch_snapped_points(points)
+      return { "path_coordinates": snapped_points }
+  
     #temporary, remove bounds = [43.47721....etc] -> just for testing
     bounds = [43.456500, -80.575000, 43.479500, -80.545000]
     print(f"Bounds: {bounds}")
@@ -50,27 +76,20 @@ def get_map_path_coordinates(initial_point, scaling_factor, points):
     # Run DFS to find best-matching path
 
     # Return coordinates
-    
     return { "path_coordinates": [1,1] }
 
-
-
-def scale_point(point, scaling_factor):
-    for i in range(len(point)):
-            point[i][0] *= scaling_factor
-            point[i][1] *= scaling_factor
-    return point
+# Fetch snapped points from Mapbox API
+def fetch_snapped_points(points):
+    query = "https://api.mapbox.com/matching/v5/mapbox/walking/" + ";".join([f"{lon},{lat}" for lon, lat in points]) + "?geometries=geojson&access_token=" + API_KEY
+    print(query)
+    response = requests.get(query)
     
+    if response.status_code == 200:
+        data = response.json()
+        if 'matchings' in data and len(data['matchings']) > 0:
+            return data['matchings'][0]['geometry']['coordinates']
 
-def translate_point(point, initial_point, bounds):
-    for i in range(len(point)):
-        point[i][0] += initial_point[0]
-        point[i][1] += initial_point[1]
-        bounds[0] = min(bounds[0],point[i][0]-2)
-        bounds[1] = max(bounds[1],point[i][0]+2)
-        bounds[2] = min(bounds[2],point[i][1]-2)
-        bounds[3] = max(bounds[3],point[i][1]+2)
-    return point,bounds
+
 
 def pulldata(bounds):
     api = overpy.Overpass()

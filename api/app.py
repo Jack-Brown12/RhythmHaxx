@@ -1,11 +1,6 @@
-import os
-
 from dotenv import load_dotenv
 
 from flask import Flask, jsonify, request
-from flask_cors import CORS
-
-from time import time
 
 from algorithms import JasonAlgorithm
 
@@ -13,9 +8,6 @@ from algorithms import JasonAlgorithm
 load_dotenv()
 
 app = Flask(__name__, static_folder='build', static_url_path='')
-
-origins = [o.strip() for o in os.getenv("FRONTEND_ORIGINS", "").split(",") if o.strip()]
-CORS(app, resources={r"/api/*": {"origins": origins}})
 
 @app.route('/api/mapify', methods=['POST'])
 def mapify_route():

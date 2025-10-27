@@ -186,22 +186,19 @@ def scale_point_translate(point, initial_point,bounds):
     
 
 
-
 def pulldata(bounds):
     api = overpy.Overpass()
     query = f"""
     [out:json][timeout:25];
     (
-      node({bounds[0]},{bounds[2]},{bounds[1]},{bounds[3]});
-      way({bounds[0]},{bounds[2]},{bounds[1]},{bounds[3]});
-      relation({bounds[0]},{bounds[2]},{bounds[1]},{bounds[3]});
+    way["highway"~"footway|path|pedestrian|residential|tertiary|secondary|primary|unclassified|service|track"]({str(bounds[0])},{str(bounds[2])},{str(bounds[1])},{str(bounds[3])});
     );
     out body;
     >;
     out skel qt;
     """
     result = api.query(query)
-    print(f"Nodes: {len(result.nodes)}, Ways: {len(result.ways)}, Relations: {len(result.relations)}")
+    print(f"How many Ways: {len(result.ways)}")
     return result
 
 def FindClosestNode(Point,Nodes):

@@ -191,7 +191,7 @@ def pulldata(bounds):
     query = f"""
     [out:json][timeout:25];
     (
-    way["highway"~"footway|path|pedestrian|residential|tertiary|secondary|primary"]({str(bounds[0])},{str(bounds[2])},{str(bounds[1])},{str(bounds[3])});
+    way["highway"~"footway|tertiary|secondary|primary"]({str(bounds[0])},{str(bounds[2])},{str(bounds[1])},{str(bounds[3])});
     );
     out body;
     >;

@@ -21,7 +21,9 @@
 
 	let addressSelected = $state(false);
 	let length = $state(0);
+
 	let buttonText = $state('Mapify!');
+	let buttonEnabled = $state(true);
 
 	const { points, nextStage } = $props();
 
@@ -68,10 +70,9 @@
 			const startPos = path[0];
 			const endPos = path[path.length - 1];
 
-			const style = `
+			const baseStyle = `
       					width: 12px;
       					height: 12px;
-      					background-color: green;
       					border-radius: 50%;
       					border: 2px solid white;
     				`;
@@ -80,7 +81,10 @@
 				position: startPos,
 				map,
 				content: Object.assign(document.createElement('div'), {
-					style: style
+					style: `
+	  						${baseStyle}
+	  						background-color: red;
+						`
 				})
 			});
 
@@ -92,7 +96,10 @@
 				position: endPos,
 				map,
 				content: Object.assign(document.createElement('div'), {
-					style: style
+					style: `
+	  						${baseStyle}
+	  						background-color: green;
+						`
 				})
 			});
 
@@ -135,11 +142,12 @@
 	<Sidebar
 		onButtonClick={() => {
 			buttonText = 'Mapping...';
+			buttonEnabled = false;
 			nextStage(polyline);
 		}}
 		description="Time to place your masterpiece on the globe! Start by entering the address you want to start from. Afterwards, use the two sliders to adjust the size and rotation of your drawing."
 		{buttonText}
-		buttonEnabled={addressSelected}
+		buttonEnabled={addressSelected && buttonEnabled}
 	/>
 	<div class="relative h-screen w-full">
 		<form onsubmit={submitHandler}>

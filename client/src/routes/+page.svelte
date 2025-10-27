@@ -2,6 +2,8 @@
 	import Stage1 from '$lib/components/Stages/Stage1.svelte';
 	import Stage2 from '$lib/components/Stages/Stage2.svelte';
 
+	import { PUBLIC_API_BASE_ADDRESS, PUBLIC_MAPS_API_KEY } from '$env/static/public';
+
 	import { toast } from '@zerodevx/svelte-toast';
 	import { onMount } from 'svelte';
 	import { setOptions } from '@googlemaps/js-api-loader';
@@ -12,27 +14,9 @@
 	let points: [number, number][] | null = null;
 	let mapifiedPath: [number, number][];
 
-	onMount(async () => {
-        try {
-            const response = await fetch('/api/config');
-            if (!response.ok) {
-                throw new Error('Failed to fetch config');
-            }
-            const config = await response.json();
-
-            // Use the key fetched from the Flask backend
-            setOptions({ key: config.mapsApiKey });
-
-        } catch (error) {
-            toast.push(`Error loading config: ${error}`, {
-                theme: {
-                    '--toastBackground': 'red',
-                    '--toastColor': 'white',
-                    '--toastBarBackground': 'white'
-                }
-            });
-        }
-    });
+	onMount(() => {
+		setOptions({ key: PUBLIC_MAPS_API_KEY });
+	});
 
 	const nextStage = (stageOnePoints: [number, number][] | google.maps.Polyline) => {
 		if (stage === 0) {
@@ -46,26 +30,41 @@
 				latLngArray.push([latLng.lat(), latLng.lng()]);
 			});
 
-			fetch(`/api/mapify`, {
+			fetch(`${PUBLIC_API_BASE_ADDRESS}/api/mapify`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
+				mode: "cors",
 				body: JSON.stringify({ points: latLngArray })
 			})
-				.then((response) => response.json())
-				.then((data) => {
-					mapifiedPath = data.points;
-					stage += 1;
+				.then((response) => {
+					if (!response.ok) {
+						const code = response.status;
+						toast.push(`Did not get a 200 response! Returned code: ${code}`, {
+							theme: {
+								'--toastBackground': 'red',
+								'--toastColor': 'white',
+								'--toastBarBackground': 'white'
+							}
+						});
+					}
+					response.json().then((data) => {
+						mapifiedPath = data.points;
+						stage += 1;
+					})
 				})
 				.catch((error) => {
-					toast.push(`Error: ${error}`, {
+					const code = error?.code || 'UNKNOWN';
+					const message = (error && (error.message || String(error))) ?? 'An error occurred';
+					toast.push(`Error (${code}): ${message}`, {
 						theme: {
 							'--toastBackground': 'red',
 							'--toastColor': 'white',
 							'--toastBarBackground': 'white'
 						}
 					});
+					console.error('Error during mapification:', error);
 				});
 		}
 	};

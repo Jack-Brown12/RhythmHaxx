@@ -1,11 +1,11 @@
 # Dependencies
-/node_modules
+node_modules/
 
 # IDE settings
 /.idea/
 
 # SvelteKit build artifacts
-/.svelte-kit/
+.svelte-kit/
 
 # Deployment outputs
 .output
@@ -27,3 +27,5 @@ Thumbs.db
 # Vite temporary files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+__pycache__/

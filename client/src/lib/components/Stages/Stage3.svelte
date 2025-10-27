@@ -46,10 +46,9 @@
 		const startPos = path[0];
 		const endPos = path[path.length - 1];
 
-		const style = `
+		const baseStyle = `
 						width: 12px;
 						height: 12px;
-						background-color: red;
 						border-radius: 50%;
 						border: 2px solid white;
 					`;
@@ -58,7 +57,10 @@
 			position: startPos,
 			map,
 			content: Object.assign(document.createElement('div'), {
-				style: style
+				style: `
+	  						${baseStyle}
+	  						background-color: red;
+						`
 			})
 		});
 
@@ -70,7 +72,10 @@
 			position: endPos,
 			map,
 			content: Object.assign(document.createElement('div'), {
-				style: style
+				style: `
+	  						${baseStyle}
+	  						background-color: green;
+						`
 			})
 		});
 

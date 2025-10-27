@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount, onDestroy } from "svelte";
-    import { toast } from "@zerodevx/svelte-toast";
     import Sidebar from "../Sidebar.svelte";
     import { setupHiDPI } from "$lib/canvasUtils";
 
@@ -9,7 +8,7 @@
     let canvasElement: HTMLCanvasElement;
     let ctx: CanvasRenderingContext2D | null = null;
 
-    const pointEveryDistance = 10;
+    const pointEveryDistance = 1;
     let drawing = false;
     let locked = $state(false);
 

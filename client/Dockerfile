@@ -8,6 +8,8 @@ RUN yarn install --frozen-lockfile
 
 # Build SvelteKit
 COPY . .
+COPY .env .env
+
 RUN yarn build
 
 # ---------- runtime stage ----------

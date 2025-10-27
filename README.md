@@ -1,12 +1,16 @@
 RhythmHacks Hackathon Project
+
 # Draw2Route
+
 ![Paris](./Image_2025-10-25_at_22.55.jpg)
 
 ## Overview
+
 **Draw2Route** converts a user-drawn line (a list of GPS points) into a realistic walking route that aligns with real-world roads.  
 It uses **OpenStreetMap** data through the **OSMnx** library to find the most accurate path that matches the shape of the drawing.
 
 ## How It Works
+
 1. **Input:**  
    Takes a list of GPS coordinates (points) and a flag to optionally use the OpenStreetMap API.
 2. **Bounding Box:**  

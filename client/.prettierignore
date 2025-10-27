@@ -7,3 +7,11 @@ bun.lockb
 
 # Miscellaneous
 /static/
+
+# Ignore generated or dependency folders
+node_modules
+build
+.svelte-kit
+dist
+
+.venv

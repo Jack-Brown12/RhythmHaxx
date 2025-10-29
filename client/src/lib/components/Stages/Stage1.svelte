@@ -8,7 +8,7 @@
     let canvasElement: HTMLCanvasElement;
     let ctx: CanvasRenderingContext2D | null = null;
 
-    const pointEveryDistance = 20;
+    const pointEveryDistance = 10;
     let drawing = false;
     let locked = $state(false);
 
